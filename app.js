@@ -4,9 +4,13 @@ const ul    = document.getElementById('invitedList');
 
 function createLi(text) {
     const li = document.createElement('li');
-    li.textContent = text;
+    const span = document.createElement('span');
+    span.textContent = text;
+    li.appendChild(span);
+    
     const label = document.createElement('label')
     label.textContent = 'Confirmed';
+    
     const checkbox = document.createElement('input');
     chexbox.type = 'checkbox';
     label.appendChild(checkbox);
@@ -35,7 +39,7 @@ ul.addEventListener('change', (e) =>{
     const checked = checkbox.checked;
     const listItem = checkbox.parentNode.parentNode;
 
-    if(checked) {
+    if (checked) {
         listItem.className = 'responded'
     } else {
         listItem.className = ''
@@ -44,12 +48,26 @@ ul.addEventListener('change', (e) =>{
 
 ul.addEventListener('click', (e) => {
     if (e.target.tagName === 'BUTTON') {
-        if(e.target.textContent === 'remove') {
-            const li = e.target.parentNode;
-            const ul = li.parentNode;
+        const button = e.target;
+        const li = e.target.parentNode;
+        const ul = li.parentNode;
+        if (button.textContent === 'remove') {
             ul.removeChild(li);
-        }else if(e.target.textContent === 'remove') {
-            console.log('edit')
+        } else if (button.textContent === 'edit') {
+            const span = li.firstElementChild;
+            const input = document.createElement('input')
+            input.type = 'text';
+            input.value = span.textContent;
+            li.insertBefore(input, span);
+            li.removeChild(span);
+            button.textContent = 'save';
+        } else if (button.textContent === 'save') {
+            const input = li.firstElementChild;
+            const span = document.createElement('span')
+            span.textContent = input.value;
+            li.insertBefore(span, input);
+            li.removeChild(input);
+            button.textContent = 'edit';
         }
-    }
-})
+    }    
+});

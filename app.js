@@ -1,13 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const form  = document.getElementById('registar')
-    const input = form.querySelector('input')
-
-    const mainDiv = document.querySelector('.main')
-    const ul    = document.getElementById('invitedList');
-
-    const div = document.createElement('div');
-    const filterLabel = document.createElement('label');
+    const form           = document.getElementById('registar')
+    const input          = form.querySelector('input')
+    const mainDiv        = document.querySelector('.main')
+    const ul             = document.getElementById('invitedList');
+    const div            = document.createElement('div');
+    const filterLabel    = document.createElement('label');
     const filterCheckBox = document.createElement('input');
 
     filterCheckBox.addEventListener('change', (e) => {
@@ -86,24 +84,32 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = e.target;
             const li = e.target.parentNode;
             const ul = li.parentNode;
-            if (button.textContent === 'remove') {
-                ul.removeChild(li);
-            } else if (button.textContent === 'edit') {
-                const span = li.firstElementChild;
-                const input = document.createElement('input')
-                input.type = 'text';
-                input.value = span.textContent;
-                li.insertBefore(input, span);
-                li.removeChild(span);
-                button.textContent = 'save';
-            } else if (button.textContent === 'save') {
-                const input = li.firstElementChild;
-                const span = document.createElement('span')
-                span.textContent = input.value;
-                li.insertBefore(span, input);
-                li.removeChild(input);
-                button.textContent = 'edit';
-            }
+            const action = button.textContent;
+            const nameActions = {
+                remove: () => {
+                    ul.removeChild(li);
+                },
+                edit: () => {
+                    const span = li.firstElementChild;
+                    const input = document.createElement('input')
+                    input.type = 'text';
+                    input.value = span.textContent;
+                    li.insertBefore(input, span);
+                    li.removeChild(span);
+                    button.textContent = 'save';
+                },
+                save: () => {
+                    const input = li.firstElementChild;
+                    const span = document.createElement('span')
+                    span.textContent = input.value;
+                    li.insertBefore(span, input);
+                    li.removeChild(input);
+                    button.textContent = 'edit'; 
+                }
+            };
+            
+            // Select and run action in button's name
+            nameActions[action]();
         }    
     });
 

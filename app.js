@@ -1,12 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const form           = document.getElementById('registar')
-    const input          = form.querySelector('input')
-    const mainDiv        = document.querySelector('.main')
-    const ul             = document.getElementById('invitedList');
-    const div            = document.createElement('div');
-    const filterLabel    = document.createElement('label');
+    const form = document.getElementById('registrar')
+    const input = form.querySelector('input')
+    const mainDiv = document.querySelector('.main')
+    const ul = document.getElementById('invitedList');
+    const div = document.createElement('div');
+    const filterLabel = document.createElement('label');
     const filterCheckBox = document.createElement('input');
+
+    filterLabel.textContent = "Hide those who haven't responded";
+    filterCheckBox.type = 'checkbox';
+    div.appendChild(filterLabel);
+    div.appendChild(filterCheckBox);
+    mainDiv.insertBefore(div, ul);
 
     filterCheckBox.addEventListener('change', (e) => {
         const isChecked = e.target.checked;
@@ -36,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createLi(text) {
         function createElement(elementName, property, value) {
-            const element = document.createElement('span');
+            const element = document.createElement(elementName);
             element[property] = value;
             return element;
         }
@@ -47,15 +53,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return element;
         }
         const li = document.createElement('li');
-
         appendToLI('span', 'textContent', text)
-        
         appendToLI('label', 'textContent', 'Confirmed')
             .appendChild(createElement('input', 'type', 'checkbox'));
-
         appendToLI('button', 'textContent', 'edit');
-
         appendToLI('button', 'textContent', 'remove');
+        
         return li;
     }
 
